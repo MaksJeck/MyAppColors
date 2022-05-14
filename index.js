@@ -1,20 +1,19 @@
-const colors = require('colors');
-console.log(colors.green('hi'));
+console.log('Record 1');
 
-const [arg1, arg2] = process.argv.slice(2);
-console.log(process.argv);
-function getPrimes(a, num) {
-    const seive = [];
-    const primes = [];
+setTimeout(() => {
+    console.log('Record 2')
 
-    for (let i = 2; i <= num; i++) {
-        if (!seive[i]) {
-            primes.push(i);
-            for (let j = i * i; j <= num; j += i) {
-                seive[j] = true;
-            }
-        } 
-    }
-    return primes;
-}
-console.log(getPrimes(+arg1, +arg2));
+    Promise.resolve().then(() => {
+        setTimeout(() => {
+            сonsole.log('Record 3');
+
+            Promise.resolve().then(() => {
+                console.log('Record 4');
+            });
+        });
+    });
+});
+
+console.log('Record 5');
+
+Promise.resolve().then(() => Promise.resolve().then(() => console.log('Record 6')));

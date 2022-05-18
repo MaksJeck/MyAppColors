@@ -11,6 +11,7 @@ class Handler {
             hours: Math.floor((time / (1000 * 60 * 60)) % 24),
             days: Math.floor(time / (1000 * 60 * 60 * 24)),
         };
+        console.clear();
         return `осталось ${timer.days} дней и ${timer.hours}:${timer.minutes}:${timer.seconds}`;
     };
     static handler() {
@@ -37,12 +38,12 @@ class Time {
         this.time = timeString;
     };
     timeToSeconds() {
-        let [day, month, year] = this.time.split('-');
+        let [hour, day, month, year] = this.time.split('-');
 
         if (year.toString().length === 2) {
             year = Number(`20${year}`);
         };
-        const date = new Date(year, month - 1, day);
+        const date = new Date(year, month - 1, day, hour);
         return date.getTime();
     };
 };

@@ -7,7 +7,7 @@ const inquirer = require('inquirer');
 const yargs = require("yargs");
 const { Transform } = require("stream");
 
-const search = () => {
+const totalCommander = () => {
     class MyEmitter extends EventEmitter { }
 
     const myEmitter = new MyEmitter();
@@ -95,4 +95,4 @@ const transformChunks = (search) => {
     });
 };
 
-search();
+totalCommander();

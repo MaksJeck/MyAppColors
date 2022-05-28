@@ -1,11 +1,11 @@
 #!/usr/bin/env node
+
 const fs = require("fs");
 const path = require("path");
 const EventEmitter = require('events');
 const inquirer = require('inquirer');
 const yargs = require("yargs");
 const { Transform } = require("stream");
-const { EOL } = require("os");
 
 const search = () => {
     class MyEmitter extends EventEmitter { }
@@ -86,7 +86,7 @@ const transformChunks = (search) => {
 
             if (transformedChunk?.length) {
                 transformedChunk.forEach(line => {
-                    this.push(`| ${line.trim()} ${EOL}|----------------------------------- ${EOL}`)
+                    this.push(`${line.trim()}`)
                 })
             }
 

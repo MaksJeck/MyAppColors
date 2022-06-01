@@ -3,7 +3,7 @@ const path = require('path');
 const http = require('http');
 const io = require('socket.io');
 
-const app = http.createServer((request, response) => {
+const chat = http.createServer((request, response) => {
     if (request.method === 'GET') {
 
       const filePath = path.join(__dirname, 'index.html');
@@ -31,31 +31,35 @@ const app = http.createServer((request, response) => {
     }
 });
 
-const socket = io(app);
+const socket = io(chat);
 
 socket.on('connection', function (socket) {
   const clientAlias = `Client '${Math.floor(Math.random()*10000)}': `
 
   console.log('New connection');
 
-  socket.broadcast.emit('NEW_CONN_EVENT', {
-      msg: 'Connected', userName: clientAlias
+  socket.broadcast.emit('connectionNewClient', {
+      msg: 'Connected', 
+      userName: clientAlias
   });
 
-  socket.on('CLIENT_MSG', (data) => {
-    socket.broadcast.emit('SERVER_MSG', {
-        msg: data.msg, userName: clientAlias
+  socket.on('clientMessage', (data) => {
+    socket.broadcast.emit('serverMessage', {
+        msg: data.msg, 
+        userName: clientAlias
     });
-    socket.emit('SERVER_MSG', {
-        msg: data.msg, userName: clientAlias
+    socket.emit('serverMessage', {
+        msg: data.msg, 
+        userName: clientAlias
     });
   });
 
   socket.on("disconnect", () => {
-    socket.broadcast.emit('SERVER_MSG', {
-        msg: 'Disconnected', userName: clientAlias
+    socket.broadcast.emit('serverMessage', {
+        msg: 'Disconnected', 
+        userName: clientAlias
     });
   });
 });
 
-app.listen(5555); 
+chat.listen(5555); 
